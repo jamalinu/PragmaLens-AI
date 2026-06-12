@@ -24,12 +24,47 @@ While traditional Natural Language Processing (NLP) models excel at semantic and
 * **Data Validation:** Pydantic (Structured JSON Outputs)
 * **Frontend:** Semantic HTML5, Tailwind CSS, JavaScript (Fetch API / Async-Await)
 
----
 
-## 📁 Repository Structure
 
-```text
+📁 Repository Structure
+
+
 ├── pragmalens_app.py   # FastAPI backend, local routing, and Gemini API integration
 ├── index.html          # Dynamic frontend UI styled with Tailwind CSS
 ├── requirements.txt    # Application dependencies and libraries
 └── .gitignore          # Safeguard for environment files and local caches
+Setup and Installation
+Clone the repository:
+
+Bash
+git clone [https://github.com/jamalinu/PragmaLens-AI.git](https://github.com/jamalinu/PragmaLens-AI.git)
+cd PragmaLens-AI
+Install dependencies:
+
+Bash
+pip install -r requirements.txt
+Set up your API Key:
+The application securely fetches the Gemini API key from your environment variables. Set it up in your terminal:
+
+Windows (PowerShell): $env:GEMINI_API_KEY="your_api_key_here"
+
+Linux/macOS: export GEMINI_API_KEY="your_api_key_here"
+
+Run the local server:
+
+Bash
+uvicorn pragmalens_app:app --reload
+Open your browser and navigate to http://127.0.0.1:8000 to run the application.
+
+🧠 Linguistic Context: The Gricean Framework
+In linguistic pragmatics, Grice's Maxims represent the unspoken rules of cooperative human conversation:
+
+Quantity: Make your contribution as informative as required.
+
+Quality: Do not say what you believe to be false or lack adequate evidence for.
+
+Relation: Be relevant.
+
+Manner: Be perspicuous, avoid obscurity and ambiguity.
+
+When a speaker flouts a maxim, they are not necessarily lying; they are subtly inviting the listener to look for a deeper meaning (Implicature). PragmaLens makes this intricate cognitive process visible through code.
