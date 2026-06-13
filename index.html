@@ -3,100 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PragmaLens - Analizador de Grice</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>PragmaLens - Advanced Discourse Audit Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col items-center py-10">
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
 
-    <div class="max-w-4xl w-full px-4">
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-extrabold text-indigo-700 tracking-tight">🔎 PragmaLens</h1>
-            <p class="text-gray-500 mt-2 text-lg">Analizador de Pragmática y Máximas de Grice mediante IA</p>
+    <div class="container mx-auto px-4 py-12 max-w-5xl">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-extrabold tracking-tight bg-gradient-to-r from-violet-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent mb-3">
+                🔍 PragmaLens
+            </h1>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                Plataforma Avanzada de Auditoría Lingüística. Analiza de forma unificada la Pragmática (Grice), Semántica (Ambigüedades) y Lógica (Falacias).
+            </p>
         </header>
 
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-            <label for="texto" class="block text-sm font-semibold text-gray-700 mb-2">Ingresa un diálogo o texto a analizar:</label>
-            <textarea id="texto" rows="3" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Ej: —¿Te gusta mi vestido nuevo? —Hace un día maravilloso hoy, ¿verdad?"></textarea>
-            <button onclick="analizarTexto()" id="btn-analizar" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors shadow">
-                Analizar Pragmática
+        <div class="bg-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700/50 mb-8">
+            <label for="textInput" class="block text-sm font-semibold text-slate-300 mb-2">Ingresa un diálogo, discurso o texto a auditar:</label>
+            <textarea id="textInput" rows="4" 
+                class="w-full bg-slate-950 text-slate-100 placeholder-slate-500 rounded-xl p-4 border border-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none transition"
+                placeholder="Ej: —¿Vas a venir a la cena? —Tengo que terminar un informe urgente..."></textarea>
+            
+            <button id="analyzeBtn" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-500/30 transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Ejecutar Auditoría Lingüística
             </button>
         </div>
 
-        <div id="loading" class="hidden text-center my-6">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-indigo-500 border-t-transparent"></div>
-            <p class="text-gray-500 mt-2">Gemini está analizando las implicaturas...</p>
+        <div id="loading" class="hidden text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent mb-3"></div>
+            <p class="text-slate-400 animate-pulse">Sincronizando con los motores analíticos de Gemini...</p>
         </div>
 
-        <div id="resultados" class="hidden space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="contenedor-maximas"></div>
-
-            <div class="bg-amber-50 border-l-4 border-amber-500 rounded-r-xl p-5 shadow-sm">
-                <h3 class="text-amber-800 font-bold text-lg mb-1">💡 Implicatura Conversacional</h3>
-                <p id="res-implicatura" class="text-amber-900"></p>
+        <div id="results" class="hidden space-y-8">
+            
+            <div class="bg-gradient-to-r from-indigo-950 to-slate-800 rounded-2xl p-6 border border-indigo-500/30 shadow-lg">
+                <h3 class="text-indigo-400 font-bold uppercase text-xs tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-ranking-star"></i> Evaluación Global del Discurso
+                </h3>
+                <p id="globalEvaluation" class="text-slate-200 text-lg italic"></p>
             </div>
 
-            <div class="bg-indigo-50 border-l-4 border-indigo-500 rounded-r-xl p-5 shadow-sm">
-                <h3 class="text-indigo-800 font-bold text-lg mb-1">🎯 Conclusión Pragmática</h3>
-                <p id="res-conclusion" class="text-indigo-950"></p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700/50 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-100 border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-comments text-violet-400"></i> Módulo Pragmático (Grice)
+                        </h2>
+                        <div id="maximsContainer" class="space-y-3 mb-6"></div>
+                    </div>
+                    <div class="bg-slate-950 rounded-xl p-4 border border-violet-500/20">
+                        <span class="block text-xs font-bold text-violet-400 uppercase tracking-wider mb-1">Implicatura Conversacional Extraída</span>
+                        <p id="implicatureText" class="text-slate-300 font-medium"></p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700/50">
+                        <h2 class="text-xl font-bold text-slate-100 border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Módulo Semántico (Ambigüedades)
+                        </h2>
+                        <div id="ambiguitiesContainer" class="space-y-3"></div>
+                    </div>
+
+                    <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700/50">
+                        <h2 class="text-xl font-bold text-slate-100 border-b border-slate-700 pb-3 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-gavel text-rose-400"></i> Módulo Lógico (Falacias Argumentativas)
+                        </h2>
+                        <div id="fallaciesContainer" class="space-y-3"></div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
     <script>
-        async function analizarTexto() {
-            const texto = document.getElementById('texto').value;
-            const btn = document.getElementById('btn-analizar');
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            const textInput = document.getElementById('textInput').value.trim();
+            if (!textInput) {
+                alert('Por favor, introduce algún texto para analizar.');
+                return;
+            }
+
             const loading = document.getElementById('loading');
-            const resultados = document.getElementById('resultados');
-            
-            if(!texto.trim()) return alert("Por favor, escribe algo.");
+            const results = document.getElementById('results');
+            const maximsContainer = document.getElementById('maximsContainer');
+            const ambiguitiesContainer = document.getElementById('ambiguitiesContainer');
+            const fallaciesContainer = document.getElementById('fallaciesContainer');
 
             loading.classList.remove('hidden');
-            resultados.classList.add('hidden');
-            btn.disabled = true;
+            results.classList.add('hidden');
 
-            try {
-                const response = await fetch('http://127.0.0.1:8000/api/analizar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ texto: texto })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    const contenedor = document.getElementById('contenedor-maximas');
-                    contenedor.innerHTML = '';
-                    
-                    data.analisis_maximas.forEach(m => {
-                        let badgeColor = m.estado === 'Cumplida' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-                        
-                        contenedor.innerHTML += `
-                            <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h4 class="font-bold text-gray-800">Máxima de ${m.maxima}</h4>
-                                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${badgeColor}">${m.estado}</span>
-                                </div>
-                                <p class="text-sm text-gray-600">${m.explicacion}</p>
-                            </div>
-                        `;
+            fetch('/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: textInput })
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    return response.json().then(function(err) { 
+                        throw new Error(err.detail || 'Error en el servidor'); 
                     });
-
-                    document.getElementById('res-implicatura').innerText = data.implicatura_conversacional;
-                    document.getElementById('res-conclusion').innerText = data.conclusion_pragmatica;
-                    
-                    resultados.classList.remove('hidden');
-                } else {
-                    alert("Error en el análisis: " + (data.detail || "Error en el servidor"));
                 }
-            } catch (error) {
-                alert("No se pudo conectar con el servidor backend.");
+                return response.json();
+            })
+            .then(function(data) {
+                // 1. Evaluación Global
+                document.getElementById('globalEvaluation').innerText = data.global_discourse_evaluation;
+
+                // 2. Máximas de Grice
+                maximsContainer.innerHTML = '';
+                data.maxims_analysis.forEach(function(m) {
+                    const isFulfilled = m.status === 'Fulfilled';
+                    const badgeColor = isFulfilled ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+                    const badgeText = isFulfilled ? 'Cumplida' : 'Flotada';
+                    
+                    maximsContainer.innerHTML += `
+                        <div class="bg-slate-900/60 rounded-xl p-3 border border-slate-700/40">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-slate-200">${m.maxim}</span>
+                                <span class="text-xs px-2 py-0.5 rounded-full border ${badgeColor} font-semibold">${badgeText}</span>
+                            </div>
+                            <p class="text-xs text-slate-400">${m.explanation}</p>
+                        </div>
+                    `;
+                });
+                document.getElementById('implicatureText').innerText = data.implicature;
+
+                // 3. Ambigüedades
+                ambiguitiesContainer.innerHTML = '';
+                if (!data.ambiguities_detected || data.ambiguities_detected.length === 0) {
+                    ambiguitiesContainer.innerHTML = `
+                        <div class="text-center py-4 text-slate-500 text-sm italic">
+                            <i class="fa-solid fa-circle-check text-emerald-500/50 mr-1"></i> No se detectaron ambigüedades.
+                        </div>`;
+                } else {
+                    data.ambiguities_detected.forEach(function(a) {
+                        ambiguitiesContainer.innerHTML += `
+                            <div class="bg-slate-900/40 border-l-4 border-amber-500 rounded-r-xl p-3 text-sm mb-2">
+                                <div class="flex justify-between font-bold text-slate-300 mb-1">
+                                    <span>"${a.segment}"</span>
+                                    <span class="text-xs text-amber-400 bg-amber-500/10 px-2 rounded-full">${a.type}</span>
+                                </div>
+                                <p class="text-xs text-slate-400">${a.explanation}</p>
+                            </div>`;
+                    });
+                }
+
+                // 4. Falacias
+                fallaciesContainer.innerHTML = '';
+                if (!data.fallacies_detected || data.fallacies_detected.length === 0) {
+                    fallaciesContainer.innerHTML = `
+                        <div class="text-center py-4 text-slate-500 text-sm italic">
+                            <i class="fa-solid fa-circle-check text-emerald-500/50 mr-1"></i> No se detectaron falacias lógicas.
+                        </div>`;
+                } else {
+                    data.fallacies_detected.forEach(function(f) {
+                        fallaciesContainer.innerHTML += `
+                            <div class="bg-slate-900/40 border-l-4 border-rose-500 rounded-r-xl p-3 text-sm mb-2">
+                                <div class="font-bold text-rose-400 mb-1">
+                                    Falacia: ${f.name}
+                                </div>
+                                <p class="text-xs text-slate-300 mb-1 italic">"${f.segment}"</p>
+                                <p class="text-xs text-slate-400">${f.explanation}</p>
+                            </div>`;
+                    });
+                }
+
+                results.classList.remove('hidden');
+            })
+            .catch(function(error) {
+                alert('Error al procesar la auditoría: ' + error.message);
                 console.error(error);
-            } finally {
+            })
+            .finally(function() {
                 loading.classList.add('hidden');
-                btn.disabled = false;
-            }
-        }
+            });
+        });
     </script>
 </body>
 </html>
