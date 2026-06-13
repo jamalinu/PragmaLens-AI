@@ -1,70 +1,71 @@
-# PragmaLens: AI-Powered Pragmatics & Gricean Maxims Analyzer
+Markdown
+# 🔍 PragmaLens: Advanced Discourse Audit Platform
 
-**PragmaLens** is a Computational Linguistics web application that bridges the gap between formal linguistic theory and modern Artificial Intelligence. Built using **FastAPI** and powered by the **Gemini 2.5 Flash** model via the Google GenAI SDK, this tool automates the detection of conversational implicatures by analyzing dialogue through the lens of **H. P. Grice’s Cooperative Principle**.
+**PragmaLens** es una herramienta web avanzada de auditoría lingüística y pragmática diseñada para analizar de manera unificada la coherencia, la claridad y la validez lógica de discursos, diálogos y textos complejos. 
 
-While traditional Natural Language Processing (NLP) models excel at semantic and syntactic analysis, they often struggle with **pragmatics**—the meaning derived from context, social nuances, and what is left unsaid. **PragmaLens** solves this by evaluating how speakers intentionally flout conversational maxims to convey indirect meanings.
-
----
-
-## 🚀 Key Features
-
-* **Real-Time Pragmatic Analysis:** Leverages Gemini 2.5 Flash to decode complex human interactions, subtext, irony, and evasive maneuvers.
-* **Gricean Maxims Breakdown:** Evaluates inputs against the four core maxims: **Quantity, Quality, Relation, and Manner**, instantly flagging whether each is *Fulfilled* (Cumplida) or *Flouted* (Flotada).
-* **Conversational Implicature Extraction:** Dynamically isolates the hidden meaning or "true intent" behind the dialogue.
-* **Fatic/Courtesy Filter (Cost Optimization):** Implements an intelligent local gateway to catch simple greetings (*e.g., "Hola, buenos días"*), immediately marking them as fulfilled to prevent redundant LLM API calls.
-* **Asynchronous Local Demo Mode:** Includes hardcoded fallback scenarios (*e.g., historical pragmatic examples in Spanish and French*) to demonstrate lightning-fast UI rendering and offline reliability.
-* **Strict JSON Schema Enforcement:** Utilizes `Pydantic` structures to ensure the LLM output matches the strict, typed interface required by the frontend with 100% predictability.
+Combinando fundamentos teóricos de la lingüística con modelos de inteligencia artificial de última generación (**Gemini API**), la plataforma deconstruye las capas analíticas del lenguaje para identificar cómo nos comunicamos, dónde fallamos y de qué manera se manipula la información.
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🎯 Características Principales (Estructura Modular)
 
-* **Backend:** Python 3, FastAPI (Asynchronous REST API)
-* **AI Integration:** Google GenAI SDK (`google-genai`), Gemini 2.5 Flash
-* **Data Validation:** Pydantic (Structured JSON Outputs)
-* **Frontend:** Semantic HTML5, Tailwind CSS, JavaScript (Fetch API / Async-Await)
+La plataforma opera bajo un enfoque modular analizando tres pilares lingüísticos clave:
 
+### 1. 💬 Módulo Pragmático (Principio de Cooperación de Grice)
+* **Máximas Lingüísticas:** Evalúa el cumplimiento o flote (*flouting*) de las cuatro máximas conversacionales de Paul Grice: **Cantidad, Cualidad, Relación y Modalidad**.
+* **Implicaturas Conversacionales:** Extrae el significado oculto, las intenciones indirectas o el subtexto, procesando dinámicamente ironías, metáforas y respuestas evasivas.
 
+### 2. ⚠️ Módulo Semántico (Detección de Ambigüedades)
+* **Ambigüedad Léxica:** Identifica problemas de polisemia u homonimia donde un término confunde el sentido del mensaje.
+* **Ambigüedad Sintáctica (Anfibología):** Detecta estructuras frasales defectuosas que abren la puerta a múltiples interpretaciones erróneas.
 
-📁 Repository Structure
+### 3. 🔨 Módulo Lógico (Falacias Argumentativas)
+* **Auditoría de Discurso:** Localiza y aísla segmentos específicos del texto que incurren en vicios lógicos y trampas retóricas habituales (ej. *Ad Hominem*, *Falso Dilema*, *Pendiente Resbaladiza*).
+* **Análisis Crítico:** Ofrece una explicación rigurosa de por qué el argumento carece de validez formal.
 
+---
 
-├── pragmalens_app.py   # FastAPI backend, local routing, and Gemini API integration
-├── index.html          # Dynamic frontend UI styled with Tailwind CSS
-├── requirements.txt    # Application dependencies and libraries
-└── .gitignore          # Safeguard for environment files and local caches
-Setup and Installation
-Clone the repository:
+## 🌐 Capacidades Multilingües Avanzadas
+Gracias a su herencia filológica, **PragmaLens** está diseñado para auditar textos que combinan múltiples idiomas de manera fluida (cambios de código o *code-switching*). Sólido soporte analítico en:
+* **Berber (Tamazight)**
+* **Árabe**
+* **Catalán**
+* **Español**
+* **Francés**
+* **Inglés**
+
+---
+
+## 🛠️ Stack Tecnológico
+
+* **Backend:** FastAPI (Python 3.13)
+* **Core IA:** Google GenAI SDK (Modelos Gemini)
+* **Frontend:** HTML5, JavaScript (Fetch API / Promesas asíncronas), Tailwind CSS (Interfaz moderna con UI oscura).
+* **Despliegue:** Hugging Face Spaces.
+
+---
+
+## 🚀 Instalación y Ejecución en Local
+
+Si deseas probar o auditar la aplicación en tu propio entorno:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/TU_USUARIO/Pragmalens-AI.git](https://github.com/TU_USUARIO/Pragmalens-AI.git)
+   cd Pragmalens-AI
+Instalar dependencias:
 
 Bash
-git clone [https://github.com/jamalinu/PragmaLens-AI.git](https://github.com/jamalinu/PragmaLens-AI.git)
-cd PragmaLens-AI
-Install dependencies:
+pip install fastapi uvicorn google-genai
+Configurar la API Key:
+Establece tu credencial de Google AI Studio en tus variables de entorno:
 
-Bash
-pip install -r requirements.txt
-Set up your API Key:
-The application securely fetches the Gemini API key from your environment variables. Set it up in your terminal:
+En Windows (PowerShell): $env:GEMINI_API_KEY="tu_clave_aquí"
 
-Windows (PowerShell): $env:GEMINI_API_KEY="your_api_key_here"
+En Linux/Mac: export GEMINI_API_KEY="tu_clave_aquí"
 
-Linux/macOS: export GEMINI_API_KEY="your_api_key_here"
-
-Run the local server:
+Arrancar el servidor de desarrollo:
 
 Bash
 uvicorn pragmalens_app:app --reload
-Open your browser and navigate to http://127.0.0.1:8000 to run the application.
-
-🧠 Linguistic Context: The Gricean Framework
-In linguistic pragmatics, Grice's Maxims represent the unspoken rules of cooperative human conversation:
-
-Quantity: Make your contribution as informative as required.
-
-Quality: Do not say what you believe to be false or lack adequate evidence for.
-
-Relation: Be relevant.
-
-Manner: Be perspicuous, avoid obscurity and ambiguity.
-
-When a speaker flouts a maxim, they are not necessarily lying; they are subtly inviting the listener to look for a deeper meaning (Implicature). PragmaLens makes this intricate cognitive process visible through code.
+Abre tu navegador en http://127.0.0.1:8000.
